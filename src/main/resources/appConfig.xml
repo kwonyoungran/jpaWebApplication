@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 트랜잭션 관리자를 활성화, @Transactional이 붙은곳에 트랙잭션 적용 -->
+    <tx:annotation-driven/>
+
+    <context:component-scan base-package="jpashop.service, jpashop.repository"/>
+
+    <!-- 데이터소스 설정 -->
+    <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:mem:jpashop"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+
+    <!-- 트랜잭션 관리자 설정 -->
+    <!-- 일반: org.springframework.jdbc.datasource.DataSourceTransactionManager 사용 -->
+    <!-- JPA: org.springframework.orm.jpa.JpaTransactionManager 를 트랜잭션 관리자로 등록해야함, JPA, jdbcTemplate, MyBatis도 함께 사용가능 -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- JPA 예외를 스프링 예외로 변환 -->
+    <!-- @Repository 어노테이션이 붙어있는 스프링빈에 예외변환 AOP를 적용 -->
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+    <!-- JPA 설정: 엔티티 매니저 팩토리 등록 -->
+    <!-- LocalContainerEntityManagerFactoryBean: JPA를 스프링컨테이너에서 사용할 수 있도록 spring-orm 라이브러리가 제공 -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="jpashop.domain"/> <!-- @Entity 탐색 시작 위치 -->
+        <!-- 영속성 유닛이름 지정, 설정하지 않으면 default라는 이름으로 유닛생성 -->
+<!--        <property name="persistenceUnitName" value="default"/> -->
+        <property name="jpaVendorAdapter">
+            <!-- 하이버네이트 구현체 사용 -->
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="jpaProperties"> <!-- 하이버네이트 상세 설정 -->
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>    <!-- 방언 -->
+                <prop key="hibernate.show_sql">true</prop>                              <!-- SQL 보기 -->
+                <prop key="hibernate.format_sql">true</prop>                            <!-- SQL 정렬해서 보기 -->
+                <prop key="hibernate.use_sql_comments">true</prop>                      <!-- SQL 코멘트 보기 -->
+                <prop key="hibernate.id.new_generator_mappings">true</prop>             <!-- 새 버전의 ID 생성 옵션 -->
+                <prop key="hibernate.hbm2ddl.auto">create</prop>                        <!-- DDL 자동 생성 -->
+            </props>
+        </property>
+    </bean>
+
+</beans>
