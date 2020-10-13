@@ -12,9 +12,24 @@
       <option name="url" value="https://repo1.maven.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="lemonhc-snapshot" />
+      <option name="name" value="lemonhc-snapshot" />
+      <option name="url" value="http://nexus.lemonhc.com/repository/lemonhc-snapshot/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="jboss.community" />
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="lemonhc-release" />
+      <option name="name" value="lemonhc-release" />
+      <option name="url" value="http://nexus.lemonhc.com/repository/lemonhc-release/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="team-private" />
+      <option name="name" value="team-private" />
+      <option name="url" value="http://nexus.lemonhc.com/repository/team-private/" />
     </remote-repository>
   </component>
 </project>
