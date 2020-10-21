@@ -1,0 +1,62 @@
+@startuml
+Member ||..|{ Order
+
+Member : id : Long
+Member : name : String
+Member : address : Address
+Member : orders : List
+Order : id
+Order : member : Member
+Order : orderItems : List
+Order : delevery : Delivery
+Order : orderDate : Date
+Order : state : OrderStatus
+
+Order ||--|| Delivery
+Delivery : id
+Delivery : order : Order
+Delivery : address : Address
+Delivery : status : DeliveryStatus
+
+Order ||--|{ OrderItem
+OrderItem : id
+OrderItem : item : Item
+OrderItem : order : Order
+OrderItem : orderPrice
+OrderItem : count
+
+Category ||--|| Item
+Category : id
+Category : name
+Category : itmes : List
+Category : parent : Category
+Category : child : List
+
+OrderItem ||--|{ Item
+Item : id
+Item : name
+Item : price : int
+Item : stockQuantity
+Item : categories : List
+
+Item <|-- Album
+Album : artist
+Album : etc
+
+Item <|-- Book
+Book : author
+Book : isbn
+
+Item <|-- Movie
+Movie : director
+Movie : actor
+
+class Address {
+    +city
+    +street
+    +zipcode
+}
+
+
+
+@enduml
