@@ -1,5 +1,5 @@
 @startuml
-Member ||..|{ Order
+Member ||--|{ Order
 
 Member : id : Long
 Member : name : String
@@ -25,7 +25,7 @@ OrderItem : order : Order
 OrderItem : orderPrice
 OrderItem : count
 
-Category ||--|| Item
+Category }|--|{ Item
 Category : id
 Category : name
 Category : itmes : List
