@@ -7,8 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.*;
 
@@ -22,6 +21,7 @@ public class MemberServiceTest {
 
     @Test
     public void 회원가입() throws Exception {
+
         //Given
         Member member = new Member();
         member.setName("kim");
@@ -43,7 +43,7 @@ public class MemberServiceTest {
         Member member2 = new Member();
         member2.setName("kim");
 
-        //when
+        //When
         memberService.join(member1);
         memberService.join(member2);    //예외가 발생해야 한다.
 

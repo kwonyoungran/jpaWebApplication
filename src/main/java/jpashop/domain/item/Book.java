@@ -1,14 +1,16 @@
 package jpashop.domain.item;
 
-import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorColumn(columnDefinition = "B")
+@DiscriminatorValue("B")
 public class Book extends Item {
+
     private String author;
     private String isbn;
 
+    //Getter, Setter
     public String getAuthor() {
         return author;
     }

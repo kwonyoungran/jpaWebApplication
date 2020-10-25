@@ -1,16 +1,16 @@
 package jpashop.domain.item;
 
-import jpashop.domain.item.Item;
-
-import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorColumn(columnDefinition = "A")
+@DiscriminatorValue("A")
 public class Album extends Item {
+
     private String artist;
     private String etc;
 
+    //Getter, Setter
     public String getArtist() {
         return artist;
     }
@@ -25,5 +25,13 @@ public class Album extends Item {
 
     public void setEtc(String etc) {
         this.etc = etc;
+    }
+
+    @Override
+    public String toString() {
+        return "Album{" +
+                "artist='" + artist + '\'' +
+                ", etc='" + etc + '\'' +
+                '}';
     }
 }

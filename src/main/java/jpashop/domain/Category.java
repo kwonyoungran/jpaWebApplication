@@ -22,17 +22,22 @@ public class Category {
     private List<Item> items = new ArrayList<Item>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PAREMT_ID")
+    @JoinColumn(name = "PARENT_ID")
     private Category parent;
 
     @OneToMany(mappedBy = "parent")
     private List<Category> child = new ArrayList<Category>();
 
-    //==연관관계 메소드==/
-    public void addChildCategory(Category chile) {
-        this.child.add(chile);
-        chile.setParent(this);
+    //==연관관계 메서드==//
+    public void addChildCategory(Category child) {
+        this.child.add(child);
+        child.setParent(this);
     }
+
+    public void addItem(Item item) {
+        items.add(item);
+    }
+
 
     public Long getId() {
         return id;
@@ -72,5 +77,13 @@ public class Category {
 
     public void setChild(List<Category> child) {
         this.child = child;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
